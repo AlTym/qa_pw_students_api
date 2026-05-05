@@ -1,13 +1,4 @@
-import { tr } from '@faker-js/faker';
 import { test } from '../../_fixtures/fixtures';
-
-/*
-Preconditions:
-1. Send GET request to '/todos' endpoint
-2. Assert that the Success Response Code is received
-3. Find the entry in the Repsonse Body where "completed" equals "true"
-4. Save the userId of this "todo" entry
-*/
 
 let good;
 
