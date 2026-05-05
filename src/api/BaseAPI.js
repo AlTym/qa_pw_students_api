@@ -17,7 +17,9 @@ export class BaseAPI {
 
   async parseBody(response) {
     return await response.json();
-  }  async assertSuccessResponseCode(response) {
+  }  
+  
+  async assertSuccessResponseCode(response) {
     await this.step(`Assert the code ${SUCCESS_CODE} is returned`, async () => {
       expect(this.parseStatus(response)).toEqual(SUCCESS_CODE);
     });

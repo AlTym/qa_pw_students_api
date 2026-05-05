@@ -15,15 +15,15 @@ export class TodosAPI extends BaseAPI{
   async getCompletedTodosById(userId) {
     return await this.step(`GET completed todos by id`, async () => {
       return await this.request.get(
-        `students-api/todos`, 
+        `/students-api/todos`, 
         { params: { 'userId': userId, 'completed': true} });
     });
   }
 
   async getNotCompletedTodosById(userId) {
     return await this.step(`GET not completed todos by id`, async () => {
-      return await this.request.get(`
-        students-api/todos`, 
+      return await this.request.get(
+        `/students-api/todos`, 
         { params: { 'userId': userId, 'completed': false} });
     });
   }
