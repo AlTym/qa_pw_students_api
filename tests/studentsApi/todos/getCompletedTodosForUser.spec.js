@@ -1,3 +1,4 @@
+import { tr } from '@faker-js/faker';
 import { test } from '../../_fixtures/fixtures';
 
 /*
@@ -6,23 +7,26 @@ Preconditions:
 2. Assert that the Success Response Code is received
 3. Find the entry in the Repsonse Body where "completed" equals "true"
 4. Save the userId of this "todo" entry
-
-Hint
-To send the GET request with parameters use the argument 'options':
-```
-const response = await request.get(
-'/todos',
-options : { params: { userId, completed: true} }
-);
-```
-
-Test:
-1. Send GET request to '/todos' endpoint with params userId & completed=true 
-2. Assert that the Success Response code is received
-3. Assert that the userId field in Response Body has correct value correct
-4. Assert that the completed field in Response Body has correct value correct
 */
 
-test.beforeEach(async ({}) => {});
+let good;
 
-test('GET completed todos by existing userId', async ({}) => {});
+test.beforeEach(async ({todosAPI}) => {
+  const response = await todosAPI.getAllTodos();
+
+  await todosAPI.assertSuccessResponseCode(response);
+
+  const body = await todosAPI.parseBody(response);
+
+  good = body.find(todo => todo.completed === true);
+});
+
+test('GET completed todos by existing userId', async ({todosAPI}) => {
+  const userId = good.userId;
+  const status = true;
+  const response = await todosAPI.getCompletedTodosById(userId);
+
+  await todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertUserIdIsCorrect(response, userId);
+  await todosAPI.assertStatusIsCorrect(response, status);
+});
